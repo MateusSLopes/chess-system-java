@@ -2,12 +2,29 @@ package application;
 
 import boardgame.BoardException;
 import chess.ChessMatch;
+import chess.ChessPiece;
+import chess.ChessPosition;
+
+import java.rmi.server.UID;
+import java.util.Scanner;
 
 public class Program {
     public static void main(String[] args) {
-        try{
-            ChessMatch chessmatch = new ChessMatch();
-            UI.printBoard(chessmatch.getPieces());
+        Scanner sc = new Scanner(System.in);
+        try {
+            ChessMatch chessMatch = new ChessMatch();
+            while (true) {
+                UI.printBoard(chessMatch.getPieces());
+                System.out.println();
+                System.out.print("Source: ");
+                ChessPosition source = UI.readChessPosition(sc);
+
+                System.out.println();
+                System.out.print("Target: ");
+                ChessPosition target = UI.readChessPosition(sc);
+
+                ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+            }
         } catch (BoardException e) {
             System.out.println(e.getMessage());
         }
