@@ -1,5 +1,7 @@
 package boardgame;
 
+import chess.ChessPosition;
+
 public class Board {
     private int rows;
     private int columns;
@@ -24,21 +26,21 @@ public class Board {
 
     public Piece piece(int row, int column) throws BoardException {
         if (!positionExists(row,column)) {
-            throw new BoardException(String.format("Position %d, %d not on the board", row,column));
+            throw new BoardException("Position not on the board");
         }
         return pieces[row][column];
     }
 
     public Piece piece(Position position) throws BoardException {
         if (!positionExists(position)) {
-            throw new BoardException(String.format("Position %s not on the board",position));
+            throw new BoardException("Position not on the board");
         }
         return pieces[position.getRow()][position.getColumn()];
     }
 
     public void placePiece(Piece piece, Position position) throws BoardException {
         if (thereIsAPiece(position)) {
-            throw new BoardException("There is already a piece on position " + position);
+            throw new BoardException("There is already a piece on position");
         }
         pieces[position.getRow()][position.getColumn()] = piece;
         piece.position = position;
@@ -54,7 +56,7 @@ public class Board {
 
     public boolean thereIsAPiece(Position position) throws BoardException {
         if (!positionExists(position)) {
-            throw new BoardException(String.format("Position %s not on the board",position));
+            throw new BoardException("Position not on the board");
         }
         return piece(position) != null;
     }

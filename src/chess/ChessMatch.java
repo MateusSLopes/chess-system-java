@@ -2,7 +2,6 @@ package chess;
 
 import boardgame.Board;
 import boardgame.BoardException;
-import boardgame.Position;
 import chess.pieces.King;
 import chess.pieces.Rook;
 
@@ -19,14 +18,19 @@ public class ChessMatch {
         for(int i = 0; i < board.getRows(); i++) {
             for (int j = 0 ; j < board.getColumns(); j++) {
                 mat[i][j] = (ChessPiece) board.piece(i,j);
-                // Doing Downcasting, because ChessPiece is an intermediate class to protect the Piece class, which cannot be accessed by ChessMatch.
+                // Doing downcasting, because ChessPiece is an intermediate class to protect the Piece class, which cannot be accessed by ChessMatch.
             }
         }
         return mat;
     }
 
+    private void placeNewPiece(int row,char column,ChessPiece piece) throws BoardException {
+        board.placePiece(piece, new ChessPosition(row, column).toPosition());
+    }
+
     private void initalSetup() throws BoardException {
-        board.placePiece(new Rook(board,Color.WHITE), new Position(2,1));
-        board.placePiece(new King(board,Color.BLACK), new Position(-1,4));
+        placeNewPiece(6,'a',new Rook(board,Color.WHITE));
+        placeNewPiece(8,'d',new King(board,Color.BLACK));
+        placeNewPiece(1,'h',new King(board,Color.BLACK));
     }
 }
